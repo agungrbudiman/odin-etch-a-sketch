@@ -1,0 +1,38 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+#grid-container {
+    display: grid;
+    justify-content: center;
+    grid-gap: 1px;
+    width: 720px;
+    height: 720px;
+}
+
+.grid-item {
+    outline: 1px solid lightgray;
+}
+
+.hover {
+    background-color: aqua;
+}
+
+button {
+    padding: 5px 15px;
+    border: 1px solid aqua;
+    cursor: pointer;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: aqua;
+}
