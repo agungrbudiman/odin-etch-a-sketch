@@ -26,7 +26,8 @@ function sketch(e) {
     if (e.target.className == 'grid-item') {
         if (btnRGB.classList.contains("active")) {
             const brightness = e.target.getAttribute("data-brightness");
-            if (e.target.style.backgroundColor == "white") {
+            const bgColor = e.target.style.backgroundColor;
+            if (bgColor == "white" || bgColor == "black") {
                 e.target.style.backgroundColor = randomColor();
             }
             else if (brightness > 0){
