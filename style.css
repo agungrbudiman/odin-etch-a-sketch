@@ -18,11 +18,7 @@ body {
 }
 
 .grid-item {
-    outline: 1px solid lightgray;
-}
-
-.hover {
-    background-color: aqua;
+    border: 1px solid lightgray;
 }
 
 button {
@@ -33,6 +29,6 @@ button {
     border-radius: 4px;
 }
 
-button:hover {
+button:hover, button.active {
     background-color: aqua;
 }
