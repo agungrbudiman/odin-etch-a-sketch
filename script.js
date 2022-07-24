@@ -17,9 +17,10 @@ function sketch(e) {
 }
 
 gridContainer.addEventListener('mousedown', (e) => {
+    sketch(e);
     gridContainer.addEventListener('mouseover', sketch);
 })
-gridContainer.addEventListener('mouseup', (e) => {
+document.addEventListener('mouseup', (e) => {
     gridContainer.removeEventListener('mouseover', sketch);
 })
 
