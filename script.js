@@ -3,6 +3,7 @@ const gridContainer = document.querySelector("#grid-container");
 const btnRGB = document.querySelector("#btn-rgb");
 const btnSize = document.querySelector("#btn-size");
 const btnClear = document.querySelector("#btn-clear");
+const btnEraser = document.querySelector("#btn-eraser");
 
 function createGrid(gridSize) {
     gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
@@ -66,16 +67,29 @@ function changeGrid() {
     }
 }
 
+function erase(e) {
+    e.target.style.backgroundColor = "transparent";
+    e.target.removeAttribute("data-brightness");
+    e.target.style.filter = '';
+}
+
 gridContainer.addEventListener('mousedown', (e) => {
-    sketch(e);
-    gridContainer.addEventListener('mouseover', sketch);
+    if (btnEraser.classList.contains("active")) {
+        erase(e);
+        gridContainer.addEventListener('mouseover', erase);
+    } else {
+        sketch(e);
+        gridContainer.addEventListener('mouseover', sketch);
+    }
 })
 
 document.addEventListener('mouseup', () => {
     gridContainer.removeEventListener('mouseover', sketch);
+    gridContainer.removeEventListener('mouseover', erase);
 })
 
 btnSize.addEventListener('click', changeGrid);
 btnClear.addEventListener('click', clearGrid);
 btnRGB.addEventListener('click', toggleButton);
+btnEraser.addEventListener('click', toggleButton);
 createGrid(gridSize);
