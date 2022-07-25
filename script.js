@@ -9,8 +9,7 @@ function createGrid(gridSize) {
     for (let i = 1; i <= gridSize*gridSize; i++) {
         const gridItem = document.createElement("div");
         gridItem.classList.add("grid-item");
-        gridItem.style.backgroundColor = "white";
-        gridItem.setAttribute("data-brightness","100");
+        gridItem.style.backgroundColor = "transparent";
         gridContainer.append(gridItem);
     }
 }
@@ -26,9 +25,9 @@ function sketch(e) {
     if (e.target.className == 'grid-item') {
         if (btnRGB.classList.contains("active")) {
             const brightness = e.target.getAttribute("data-brightness");
-            const bgColor = e.target.style.backgroundColor;
-            if (bgColor == "white" || bgColor == "black") {
+            if (brightness == null) {
                 e.target.style.backgroundColor = randomColor();
+                e.target.setAttribute("data-brightness","100");
             }
             else if (brightness > 0){
                 e.target.style.filter = `brightness(${brightness - 10}%)`;
@@ -36,7 +35,34 @@ function sketch(e) {
             }
         } else {
             e.target.style.backgroundColor = "black";
+            e.target.removeAttribute("data-brightness");
         }
+    }
+}
+
+function clearGrid() {
+    const gridItems = gridContainer.children;
+    for (const gridItem of gridItems) {
+        gridItem.style.backgroundColor = "transparent";
+        gridItem.removeAttribute("data-brightness");
+        gridItem.style.filter = '';
+    }
+}
+
+function toggleButton(e) {
+    if (e.target.classList.contains("active")) {
+        e.target.classList.remove("active")
+    } else {
+        e.target.classList.add("active");
+    }
+}
+
+function changeGrid() {
+    const input = prompt("Enter grid size (max 100): ");
+    if (parseInt(input) <= 100) {
+        gridSize = parseInt(input);
+        gridContainer.textContent = '';
+        createGrid(gridSize);
     }
 }
 
@@ -49,30 +75,7 @@ document.addEventListener('mouseup', () => {
     gridContainer.removeEventListener('mouseover', sketch);
 })
 
-btnSize.addEventListener('click', () => {
-    const input = prompt("Enter grid size (max 100): ");
-    if (parseInt(input) <= 100) {
-        gridSize = parseInt(input);
-        gridContainer.textContent = '';
-        createGrid(gridSize);
-    }
-})
-
-btnClear.addEventListener('click', () => {
-   const gridItems = gridContainer.children;
-   for (const gridItem of gridItems) {
-       gridItem.style.backgroundColor = "white";
-       gridItem.setAttribute("data-brightness", "100");
-       gridItem.style.filter = '';
-   }
-})
-
-btnRGB.addEventListener('click', () => {
-    if (btnRGB.classList.contains("active")) {
-        btnRGB.classList.remove("active")
-    } else {
-        btnRGB.classList.add("active");
-    }
-})
-
+btnSize.addEventListener('click', changeGrid);
+btnClear.addEventListener('click', clearGrid);
+btnRGB.addEventListener('click', toggleButton);
 createGrid(gridSize);
